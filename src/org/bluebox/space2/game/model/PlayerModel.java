@@ -5,6 +5,7 @@ import org.bluebox.space2.engine.screen.BaseScreenLayer;
 import org.bluebox.space2.game.Constants;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 
 public class PlayerModel {
 
@@ -18,7 +19,7 @@ public class PlayerModel {
 	private double		mRotatePos;
 	
 	public void draw (BaseScreenLayer layer) {
-		layer.draw(Art.player, (int)mPosX, (int)mPosY, (float)(mRotatePos));
+		layer.draw(Art.goo, (int)mPosX, (int)mPosY, (float)(mRotatePos));
 	}
 
 	public void update () {
@@ -108,6 +109,11 @@ public class PlayerModel {
 		mPosX = x;
 		mPosY = y;
 		mRotate = 0;
+	}
+
+	public void setPosition (Vector2 position) {
+		mPosX = position.x;
+		mPosY = position.y;
 	}
 
 }

@@ -20,6 +20,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 
 public abstract class BaseScreen {
 	private static final int 		TOUCH_INTERVAL = 750;
@@ -62,8 +65,11 @@ public abstract class BaseScreen {
 	protected ImageView 				mBtBack;
 	private RectangleView mTitle;
 	private TextView mTitleText;
+	protected World mWorld;
+	private Box2DDebugRenderer mDebugRenderer;
 	
 	public BaseScreen() {
+		mDebugRenderer = new Box2DDebugRenderer();
 		mMainLayer = BaseScreenLayer.create(BaseScreenLayer.CACHE);
 		mTopLayer = BaseScreenLayer.create(BaseScreenLayer.CACHE);
 		mUILayer = BaseScreenLayer.create(BaseScreenLayer.CACHE);
@@ -209,6 +215,10 @@ public abstract class BaseScreen {
 
 		// Render UI
 		mUILayer.draw(mOffsetX, mOffsetY, 1);
+		
+		Matrix4 projection = new Matrix4();
+		projection.setToOrtho(0, Constants.GAME_WIDTH, 0, Constants.GAME_HEIGHT, -1, 1);
+		mDebugRenderer.render(mWorld, projection);
 
 		renderTransition();
 	}
@@ -375,6 +385,10 @@ public abstract class BaseScreen {
 	}
 
 	public void onDown (int x, int y) {
+	}
+
+	public void setWorld (World world) {
+		mWorld = world;
 	}
 
 }

@@ -17,6 +17,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
@@ -51,6 +53,8 @@ public class Game implements ApplicationListener {
 
 	private boolean mIsRunning;
 
+	private World mWorld;
+
 	public enum Anim {
 		NO_TRANSITION,
 		FLIP_LEFT,
@@ -75,6 +79,8 @@ public class Game implements ApplicationListener {
 
 		sRandom = new Random(42);
 		
+		mWorld = new World(new Vector2(0, -8), true);
+
 		double r1 = 320f / Gdx.graphics.getHeight();
 		double r2 = 480f / Gdx.graphics.getWidth();
 		System.out.println("window ratio: " + r1 + ", " + r2);
@@ -96,8 +102,8 @@ public class Game implements ApplicationListener {
 		
 		mScreenBG = BaseScreenLayer.create(BaseScreenLayer.DYNAMIC);
 		
-		Gdx.graphics.setContinuousRendering(false);
-		Gdx.graphics.requestRendering();
+//		Gdx.graphics.setContinuousRendering(false);
+//		Gdx.graphics.requestRendering();
 		mScreens = new LinkedList<BaseScreen>();
 
 		//GameService.getInstance().initDebug(0);
@@ -109,7 +115,9 @@ public class Game implements ApplicationListener {
 		if (Constants.GAME_WIDTH < 380 || Constants.GAME_HEIGHT < 240) {
 			//setScreen(new ErrorScreen(ErrorScreen.RESOLUTION_NOT_SUPPORTED));
 		} else {
-			setScreen(new LevelScreen());
+			BaseScreen screen = new LevelScreen();
+			screen.setWorld(mWorld);
+			setScreen(screen);
 			startRunning();
 //			setScreen(new PlanetScreen(GameService.getInstance().getPlayer().getHome().getSystem(), GameService.getInstance().getPlayer().getHome()));
 //			setScreen(new PanelCreateFleet(GameService.getInstance().getPlayer().getHome().getDock()));
@@ -219,6 +227,10 @@ public class Game implements ApplicationListener {
 		}
 		
 		mRenderCount++;
+		
+//		System.out.println("RENDER");
+		
+		mWorld.step(1f, 6, 2);
 		
 		sRender = (sRender * 7 + (System.currentTimeMillis() - time)) / 8;
 		

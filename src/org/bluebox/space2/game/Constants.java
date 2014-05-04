@@ -43,5 +43,8 @@ public class Constants {
 	public static final double BOUND_COOEF = 0.95;
 	public static final double MAX_ROTATE = 20;
 	public static final double ROTATE_DIMINUTION = 0.95;
+	public static final int WORLD_RENDER_RATIO = 4;
+	public static final int WORLD_TILE = 8;
+	public static final int WORLD_TILE_HALF = 4;
 
 }

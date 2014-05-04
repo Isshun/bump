@@ -9,7 +9,7 @@ public class ArtManager implements IArtManager {
 	public TextureRegion load (String name, int width, int height) {
 		Texture texture = new Texture(Gdx.files.internal(name));
 		TextureRegion region = new TextureRegion(texture, 0, 0, width, height);
-		region.flip(false, true);
+		region.flip(false, false);
 		return region;
 	}
 

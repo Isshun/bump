@@ -57,12 +57,21 @@ public class Art {
 	public static TextureRegion 		bt_cancel;
 	public static TextureRegion 		bt_bg;
 	public static TextureRegion 		ic_close;
-	public static TextureRegion 		player;
+	public static TextureRegion 		goo;
+	public static Pixmap 		level;
+	public static TextureRegion tile;
+	public static TextureRegion tile2;
+	public static TextureRegion tile3;
+	public static TextureRegion tile4;
 
 	public static void load () {
-		player = mArt.load("res/planet_k1_32.png", 32, 32);
+		goo = mArt.load("res/goo_32.png", 32, 32);
+		tile = mArt.load("res/tile.png", 48, 48);
+		tile2 = mArt.load("res/tile2.png", 48, 48);
+		tile3 = mArt.load("res/tile3.png", 48, 48);
+		tile4 = mArt.load("res/tile4.png", 48, 48);
 		
-		ship_big = 
+		level = new Pixmap(Gdx.files.internal("res/levels.png"));
 		ship = mArt.load("res/ship.png", 16, 16);
 		ship_32 = mArt.load("res/ship_1_32.png", 32, 32);
 		ship_64 = mArt.load("res/ship_1_64.png", 64, 64);
